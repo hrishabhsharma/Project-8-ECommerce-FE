@@ -1,0 +1,139 @@
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=EB+Garamond&display=swap');
+
+header{
+    /* background-color: #2874f0; */
+    background-color: #fff;
+    height: 4em;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    & h1{
+        font-family: 'Abril Fatface', cursive;
+        background: #121FCF;
+        background: linear-gradient(to right, #121FCF 0%, #CF1512 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    & .right{
+        display: flex;
+        gap: 1em;
+    }
+    & .search_bar{
+        display: flex;
+        height: 1.5em;
+        background-color: white;
+        border-radius: 10px;
+        border: 1px groove gray;
+        &:focus-within{
+            outline: 2px solid black;
+            & label{
+                visibility: hidden;
+            }
+        }
+        & input{
+            border-radius: 10px;
+            padding-left: 10px;
+            width: 20em;
+            border: none;
+            &:focus{
+                outline: none;
+            }
+        }
+        & label{
+            color: gray;
+            margin-right: 5px;
+            /* align-self: center; */
+        }
+        &~div{
+            cursor: pointer;
+        }
+    }
+}
+nav{
+    background-color: #fff;
+    width: 90vw;
+    display: flex;
+    justify-content: space-around;
+    padding: 1em 0;
+    height: 8em;
+    margin: 1em auto;
+    & a{
+        display: flex;
+        flex-direction: column;
+        text-decoration: none;
+        color: black;
+        & img{
+            align-self: center;
+            height: 4em;
+            width: 4em;
+        }
+    }
+}
+section{
+    background-color: #fff;
+    width: 90vw;
+    margin: 1em auto;
+    padding: 1em;   
+}
+.slider{
+    /* height: 25em; */
+    width: 90vw;
+    margin: auto;
+    /* overflow: hidden; */
+    & img{
+        height: 15em;
+        width: 100%;
+    }
+}
+
+
+.home_grocery{
+    
+    display: flex;
+    justify-content: space-between;
+    /* flex-direction: column; */
+    &>div{
+        /* font-size: 0.5em; */
+        width: 9em;
+        /* height: 5em; */
+        & img{
+            height: 10em;
+            width: 100%;
+            padding: 10px;
+        }
+        &>span{
+            height: 3em;
+            font-size: 14px;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+            overflow: hidden;
+            &+p{
+                font-size: 10px;
+            }
+        }
+        & .sprice{
+            font-size: 15px;
+            font-weight: 500;
+            color: #212121;
+        }
+        & .mprice{
+            text-decoration: line-through;
+            font-size: 13px;
+            color: #878787;
+            margin-left: 8px;
+        }
+        & .discount{
+            color: #388e3c;
+            font-size: 12px;
+            letter-spacing: -.2px;
+            font-weight: 500;
+            margin-left: 5px;
+        }
+
+
+    }
+}
