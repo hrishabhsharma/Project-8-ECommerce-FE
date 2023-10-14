@@ -90,7 +90,7 @@ section{
 }
 
 
-.home_grocery{
+.cards{
     
     display: flex;
     justify-content: space-between;
@@ -106,7 +106,7 @@ section{
         }
         &>span{
             height: 3em;
-            font-size: 14px;
+            font-size: 1em;
             display: -webkit-box;
             -webkit-box-orient: vertical;
             -webkit-line-clamp: 2;
@@ -115,12 +115,12 @@ section{
                 font-size: 10px;
             }
         }
-        & .sprice{
+        & .sellingPrice{
             font-size: 15px;
             font-weight: 500;
             color: #212121;
         }
-        & .mprice{
+        & .costPrice{
             text-decoration: line-through;
             font-size: 13px;
             color: #878787;
