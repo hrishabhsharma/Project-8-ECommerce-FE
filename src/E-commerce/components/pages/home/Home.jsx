@@ -7,8 +7,8 @@ import axios from 'axios'
 const Home = () => {
     const [Data, setData] = useState("")
     useEffect(() => {
-        axios(`http://localhost:4000/home`)
-            .then((res) => setData(res.data))
+        axios(`https://hrishabh-e-commerce.onrender.com/home`)
+            .then((res) => setData(res.data.data))
             .catch((err) => console.log(err))
     }, [])
     const Mobiles = Data && Data.filter((j) => j.category === "mobiles")

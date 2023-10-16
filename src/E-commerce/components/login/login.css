@@ -1,0 +1,45 @@
+.popup-container{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    & .popup {
+        width: 30%;
+        padding: 1em;
+        border-radius: 10px;
+        background-color: rgba(255, 255, 255);
+        box-shadow: 0 0 1em rgba(0, 0, 0, 0.5);
+        text-align: center;
+        position: relative;
+        & .closeButton{
+            position: absolute;
+            top: 1em;
+            right: 1em;
+            cursor: pointer;
+        }
+        & form{
+            padding: 1em;
+            display: flex;
+            flex-direction: column;
+            gap: 1em;
+            /* & button{
+                background-color: #00DBDE;
+                background-image: linear-gradient(90deg, #00DBDE 0%, #FC00FF 100%);
+            } */
+        }
+    }
+}
+.bottom_msg{
+    padding: 3em 0;
+    cursor: pointer;
+    &:hover{
+        color: #00DBDE;
+    }
+}

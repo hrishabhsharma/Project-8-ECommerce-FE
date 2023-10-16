@@ -47,9 +47,9 @@ header{
             margin-right: 5px;
             /* align-self: center; */
         }
-        &~div{
+        /* &~div{
             cursor: pointer;
-        }
+        } */
     }
 }
 nav{

@@ -1,39 +1,80 @@
-// import axios from 'axios'
+import axios from 'axios'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import "./hrep.css"
+import "./login.css"
+import { faCircleXmark } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Visibility, VisibilityOff } from '@mui/icons-material'
+import { Button, IconButton, TextField } from '@mui/material'
+
 
 const Login = ({ onClose }) => {
-    const nav = useNavigate()
-    const [User,setUser] = useState({
-        email:    "",
-        password: "",
-    })
-    const handleUser = (e)=>{
-        setUser({...User,[e.target.name]:e.target.value})
-    }
+  const nav = useNavigate()
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+  const [User, setUser] = useState({
+    email: "",
+    password: "",
+  })
+  const handleUser = (e) => {
+    setUser({ ...User, [e.target.name]: e.target.value })
+  }
+  const login = (e) => {
+    e.preventDefault();
+    axios.post("http://localhost:4000/login", User)
+      .then(res => {
+        if (res.data.token) {
+          localStorage.setItem("userToken", (res.data.token))
+          localStorage.setItem("userName",res.data.username)
+          setTimeout(() => {
+            nav('/')
+            window.location.reload(true)
+          }, 1500)
+        }
+      })
+      .catch(err => console.log(err.response.data.msg))
+  }
   return (
     <div className="popup-container">
       <div className='popup'>
-      <h1>Welcome <br/> Hrep</h1>
-      <button onClick={onClose}>Close</button>
-      <form onSubmit="#">
-        <div className="form-floating mb-3">
-          <input name='email' onChange={handleUser} type="email" className="form-control" id="floatingInput" placeholder="name@example.com"/>
-          <label htmlFor="floatingInput">Email address</label>
-        </div>
-        <div className="form-floating">
-          <input name='password' onChange={handleUser} type="password" className="form-control" id="floatingPassword" placeholder="Password"/>
-          <label htmlFor="floatingPassword">Password</label>
-        </div>
-        {/* {
-          Message ? <div id="emailHelp" className="form-text">{Message}</div> : ""
-        } */}
-        <button type='submit'>Submit</button>
-      </form>
-      <p className='bottom_msg' onClick={()=>nav("/signup")}>Don't have an account? Sign Up</p>
-    </div>
-    </div>
+        <FontAwesomeIcon icon={faCircleXmark} size='2xl' onClick={onClose} className='closeButton' />
+        <h1>Welcome <br /> Hrep</h1>
+        <form onSubmit={login}>
+          <TextField
+            name='email'
+            label="Email Address"
+            type={'Email'}
+            onChange={handleUser}
+            required
+          />
+          <TextField
+            name='password'
+            label="password"
+            type={showPassword ? 'text' : 'password'}
+            onChange={handleUser}
+            InputProps={{
+              endAdornment:
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                  edge="end"
+                >
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+            }}
+            required
+          />
+          <Button variant="contained" type='submit'>Submit</Button>
+        </form>
+        <p className='bottom_msg' onClick={() =>{onClose(); nav("/signup")}}>Don't have an account? Sign Up</p>
+      </div>
+    </div >
   )
 }
 

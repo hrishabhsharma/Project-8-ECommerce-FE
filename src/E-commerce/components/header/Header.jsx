@@ -1,10 +1,13 @@
 import { faCartShopping, faSearch, faUser } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { useState } from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 import Login from '../login/Login'
 
 const Header = () => {
+    const nav = useNavigate()
+    const token = localStorage.getItem("userToken")
+    const userName = localStorage.getItem("userName")
     const [isPopupOpen, setIsPopupOpen] = useState(false);
 
     const openPopup = () => {
@@ -14,6 +17,11 @@ const Header = () => {
     const closePopup = () => {
         setIsPopupOpen(false);
     };
+
+    const logout = () => {
+        localStorage.clear();
+        window.location.reload(true)
+    }
 
     // const navigator = useNavigate()
     return (
@@ -25,11 +33,16 @@ const Header = () => {
                         <input id='search' type='text' placeholder="Search for products brands and more" />
                         <label htmlFor='search'><FontAwesomeIcon icon={faSearch} /></label>
                     </div>
-                    <div onClick={openPopup}><FontAwesomeIcon icon={faUser} /> Login</div>
-                    <div><FontAwesomeIcon icon={faCartShopping} /></div>
+                    {token
+                        ? <p>User <button onClick={logout}>logOut</button></p>
+                        : <div onClick={openPopup}><FontAwesomeIcon icon={faUser} /> Login</div>
+                    }{
+                        userName && <p>{userName}</p>
+                    }
+                    {isPopupOpen && <Login onClose={closePopup} />}
+                    <div onClick={()=>nav("/cart")}><FontAwesomeIcon icon={faCartShopping} /></div>
                 </div>
             </header>
-            {isPopupOpen && <Login onClose={closePopup} />}
             <nav>
                 <NavLink to="/">
                     <img src="https://rukminim1.flixcart.com/fk-p-flap/80/80/image/4f84f7cf33100b5d.png?q=100" alt='top offers' />

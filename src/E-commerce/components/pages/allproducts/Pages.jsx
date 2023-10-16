@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import { useEffect, useState } from "react";
 import axios from 'axios'
+import { useNavigate } from "react-router-dom";
 
 const Wrapper = styled.section`
   padding: 2em;
@@ -28,10 +29,11 @@ const Image = styled.img`
   margin: 0 auto;
 `
 const Pages = ({ category }) => {
+  const navigator = useNavigate()
   const [Data, setData] = useState("")
   useEffect(() => {
-    axios(`http://localhost:4000/${category}`)
-      .then((res) => setData(res.data))
+    axios(`https://hrishabh-e-commerce.onrender.com/${category}`)
+      .then((res) => setData(res.data.data))
       .catch((err) => console.log(err))
   }, [category])
 
@@ -39,7 +41,7 @@ const Pages = ({ category }) => {
     <Wrapper>
       {
         Data && Data.map((item, index) =>
-          <Card key={index}>
+          <Card key={index} onClick={() => navigator(`/${item.category}/${item.id}`)}>
             <Image src={item.image} alt='not found' />
             <p>{item.title}</p>
             <p>{item.price}</p>
