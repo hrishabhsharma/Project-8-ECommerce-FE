@@ -30,14 +30,14 @@ const Login = ({ onClose }) => {
       .then(res => {
         if (res.data.token) {
           localStorage.setItem("userToken", (res.data.token))
-          localStorage.setItem("userName",res.data.username)
+          localStorage.setItem("userName", res.data.username)
           setTimeout(() => {
             nav('/')
             window.location.reload(true)
           }, 1500)
         }
       })
-      .catch(err => console.log(err.response.data.msg))
+      .catch(err => console.log(err))
   }
   return (
     <div className="popup-container">
@@ -72,7 +72,7 @@ const Login = ({ onClose }) => {
           />
           <Button variant="contained" type='submit'>Submit</Button>
         </form>
-        <p className='bottom_msg' onClick={() =>{onClose(); nav("/signup")}}>Don't have an account? Sign Up</p>
+        <p className='bottom_msg' onClick={() => { onClose(); nav("/signup") }}>Don't have an account? Sign Up</p>
       </div>
     </div >
   )

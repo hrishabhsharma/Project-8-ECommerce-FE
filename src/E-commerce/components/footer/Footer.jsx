@@ -13,7 +13,7 @@ const Footer = () => {
             <span className="left">The </span>
             <span className='right'>Hrep</span>
           </div>
-          <p>The Hrep is a Blog website where people can share their views and view other people thoughts.</p>
+          <p>The Hrep is a E-Commerce website where people can purchase latest products with more discounts.</p>
           <div className='Icons'>
             <img src="https://img.icons8.com/ios-filled/50/linkedin-circled--v1.png" alt="linkedin-circled--v1" />
             <img src="https://img.icons8.com/ios-filled/50/twitter-circled--v1.png" alt="twitter-circled--v1" />
@@ -25,11 +25,11 @@ const Footer = () => {
           <div className='Blog'>
             <h2>Content</h2>
             <div>
-              <div onClick={() => { Navigator('/'); }}> Top Offers</div>
-              <div onClick={() => { Navigator('/mobiles'); }}> Mobiles</div>
-              <div onClick={() => { Navigator('/fashion'); }}> Fashion</div>
-              <div onClick={() => { Navigator('/electronics'); }}> Electronics</div>
-              <div onClick={() => { Navigator('/appliances'); }}> Appliances</div>
+              <div onClick={() => { Navigator('/'); window.scrollTo(0, 0) }}> Top Offers</div>
+              <div onClick={() => { Navigator('/mobiles'); window.scrollTo(0, 0) }}> Mobiles</div>
+              <div onClick={() => { Navigator('/fashion'); window.scrollTo(0, 0) }}> Fashion</div>
+              <div onClick={() => { Navigator('/electronics'); window.scrollTo(0, 0) }}> Electronics</div>
+              <div onClick={() => { Navigator('/appliances'); window.scrollTo(0, 0) }}> Appliances</div>
             </div>
           </div>
           {/* <div className='Resources'>
@@ -56,7 +56,7 @@ const Footer = () => {
         </div>
       </div>
       <div className='Copyright'>
-        <p>© 2023 THE HREP - A Blog Website</p>
+        <p>© 2023 THE HREP - A E-Commerce Website</p>
         <div>
           <p>Privacy Policy</p>
           <p>Terms of service</p>

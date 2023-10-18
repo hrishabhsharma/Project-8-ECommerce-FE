@@ -10,8 +10,7 @@ const CardLayout = ({ Data }) => {
         <div onClick={() => navigator(`/${item.category}/${item.id}`)} key={index}>
           <img src={item.image} alt='not found' />
           <span>{item.title}</span>
-          <p>{item.quantity}</p>
-          <div style={{ display: "flex", alignItems: "center" }}>
+          <div className='cardBottom'>
             <p className='sellingPrice'>{item.sellingPrice}</p>
             <p className='costPrice'>{item.costPrice}</p>
             <p className='discount'>{item.discount}off</p>

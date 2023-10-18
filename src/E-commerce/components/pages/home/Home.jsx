@@ -7,7 +7,7 @@ import axios from 'axios'
 const Home = () => {
     const [Data, setData] = useState("")
     useEffect(() => {
-        axios(`https://hrishabh-e-commerce.onrender.com/home`)
+        axios(`http://localhost:4000/home`)
             .then((res) => setData(res.data.data))
             .catch((err) => console.log(err))
     }, [])
@@ -34,21 +34,24 @@ const Home = () => {
                     alt='not found' />
             </Carousel>
             <section>
-                <h1>Best of the Mobiles</h1>
+                <h1>Trending Mobiles</h1>
                 <CardLayout Data={Mobiles} />
             </section>
             <section>
-                <h1>Best of the Fashion</h1>
+                <h1>Trending Fashion</h1>
                 <CardLayout Data={Fashion} />
             </section>
             <section>
-                <h1>Best of the Electronics</h1>
+                <h1>Trending Electronics</h1>
                 <CardLayout Data={Electronics} />
             </section>
             <section>
-                <h1>Best of the Appliances</h1>
+                <h1>Trending Appliances</h1>
                 <CardLayout Data={Appliances} />
             </section>
+            <div className='bigBillion'>
+                <img src='https://imgeng.jagran.com/images/2023/sep/Flipkart%20Big%20Billion%20Day%20Sale%202023%20Date1695273513411.jpg' alt='not found' />
+            </div>
         </div>
     )
 }

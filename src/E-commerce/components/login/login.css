@@ -43,3 +43,11 @@
         color: #00DBDE;
     }
 }
+
+@media only screen and (max-width:539px){
+    .popup-container{
+        & .popup{
+            width: 70%;
+        }
+    }
+}

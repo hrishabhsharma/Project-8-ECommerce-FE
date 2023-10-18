@@ -130,7 +130,7 @@ Footer{
       padding: 0.7em 0em;
   }
   .Footer_Body_Middle{
-      justify-content: space-around;
+      justify-content: flex-start;
       width: 100%;
       gap: 0;
       & .Blog , .Resources , .Partners{

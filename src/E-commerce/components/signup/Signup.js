@@ -25,19 +25,20 @@ const Signup = () => {
   const [Message, setMessage] = useState("")
   const register = (e) => {
     e.preventDefault();
-    axios.post("http://localhost:4000/signup",User)
-    .then(res=>{
-      setMessage(res.data.msg)
-      if(res.data.token){
-        localStorage.setItem("userToken",res.data.token)
-        localStorage.setItem("userName",User.name)
-        setTimeout(()=>{
-          nav("/")
-          window.location.reload(true)
-        },1000)
-      }
-    })
-    .catch(err=>console.log(err.response.data.msg))
+    axios.post("http://localhost:4000/signup", User)
+      .then(res => {
+        // console.log(res.data.msg)
+        setMessage(res.data.msg)
+        if (res.data.token) {
+          localStorage.setItem("userToken", res.data.token)
+          localStorage.setItem("userName", User.name)
+          setTimeout(() => {
+            nav("/")
+            window.location.reload(true)
+          }, 1000)
+        }
+      })
+      .catch(err => console.log(err))
   }
   return (
     <div className='Page'>
@@ -55,9 +56,15 @@ const Signup = () => {
           name='phone'
           label="Mobile Number"
           placeholder='your mobile number'
-          type='number'
+          type='tel'
           onChange={handleUser}
           required
+          inputProps={{
+            inputMode: 'numeric',
+            maxLength: 10,
+            minLength: 10,
+          }}
+        // helperText={`${User.phone.length}/11`}
         />
         <TextField
           name='email'
