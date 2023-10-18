@@ -36,7 +36,7 @@ const Pages = ({ category }) => {
   const navigator = useNavigate()
   const [Data, setData] = useState([])
   useEffect(() => {
-    axios(`http://localhost:4000/${category}`)
+    axios(`https://hrishabh-e-commerce.onrender.com/${category}`)
       .then((res) => {
         if (location) {
           return setData(res.data.data.filter((i) => i.brand === location.brand))

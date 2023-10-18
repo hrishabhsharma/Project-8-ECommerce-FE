@@ -7,7 +7,7 @@ import axios from 'axios'
 const Home = () => {
     const [Data, setData] = useState("")
     useEffect(() => {
-        axios(`http://localhost:4000/home`)
+        axios(`https://hrishabh-e-commerce.onrender.com/home`)
             .then((res) => setData(res.data.data))
             .catch((err) => console.log(err))
     }, [])

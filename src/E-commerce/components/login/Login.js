@@ -5,7 +5,7 @@ import "./login.css"
 import { faCircleXmark } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
-import { Button, IconButton, TextField } from '@mui/material'
+import { Button, IconButton, TextField, Typography } from '@mui/material'
 
 
 const Login = ({ onClose }) => {
@@ -24,10 +24,12 @@ const Login = ({ onClose }) => {
   const handleUser = (e) => {
     setUser({ ...User, [e.target.name]: e.target.value })
   }
+  const [Message, setMessage] = useState("")
   const login = (e) => {
     e.preventDefault();
-    axios.post("http://localhost:4000/login", User)
+    axios.post("https://hrishabh-e-commerce.onrender.com/login", User)
       .then(res => {
+        setMessage(res.data.msg)
         if (res.data.token) {
           localStorage.setItem("userToken", (res.data.token))
           localStorage.setItem("userName", res.data.username)
@@ -72,6 +74,9 @@ const Login = ({ onClose }) => {
           />
           <Button variant="contained" type='submit'>Submit</Button>
         </form>
+        {
+          Message ? <Typography mt={2}>{Message}</Typography> : ""
+        }
         <p className='bottom_msg' onClick={() => { onClose(); nav("/signup") }}>Don't have an account? Sign Up</p>
       </div>
     </div >

@@ -25,7 +25,7 @@ const Signup = () => {
   const [Message, setMessage] = useState("")
   const register = (e) => {
     e.preventDefault();
-    axios.post("http://localhost:4000/signup", User)
+    axios.post("https://hrishabh-e-commerce.onrender.com/signup", User)
       .then(res => {
         // console.log(res.data.msg)
         setMessage(res.data.msg)

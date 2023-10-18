@@ -17,7 +17,7 @@ const ProductDetail = () => {
   const url = useParams()
   const dispatch = useDispatch()
   useEffect(() => {
-    axios.get(`http://localhost:4000/${url.category}/${url.id}`)
+    axios.get(`https://hrishabh-e-commerce.onrender.com/${url.category}/${url.id}`)
       .then((res) => setData(res.data.data[0]))
       .catch((err) => console.log(err))
   }, [url.category, url.id])
