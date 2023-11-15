@@ -1,41 +1,24 @@
-import { faCartShopping, faSearch, faUser } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import MenuIcon from '@mui/icons-material/Menu';
-import MenuOpenIcon from '@mui/icons-material/MenuOpen';
 import React, { useState } from 'react'
-import { Link, NavLink, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Login from '../login/Login'
-import "./header.css"
+import Navbar from '../header/Navbar'
+import { Button } from "@mui/material";
+import styled from 'styled-components'
+import IconButton from "@mui/material/IconButton"
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import SearchIcon from '@mui/icons-material/Search';
 
 const Header = () => {
     const nav = useNavigate()
     const token = localStorage.getItem("userToken")
     const userName = localStorage.getItem("userName")
     const [isPopupOpen, setIsPopupOpen] = useState(false);
-    const [isMobile, setIsMobile] = useState(false)
-    const [isFashion, setIsFashion] = useState(false)
-    const [isElectronics, setIsElectronics] = useState(false)
-    const [isAppliances, setIsAppliances] = useState(false)
-    const [isDropMenu, setIsDropMenu] = useState(false)
 
-    const mobileDropDown = (e) => {
-        e.preventDefault();
-        setIsMobile(!isMobile)
-    }
-    const fashionDropDown = (e) => {
-        e.preventDefault();
-        setIsFashion(!isFashion)
-    }
-    const electronicsDropDown = (e) => {
-        e.preventDefault();
-        setIsElectronics(!isElectronics)
-    }
-    const appliancesDropDown = (e) => {
-        e.preventDefault();
-        setIsAppliances(!isAppliances)
-    }
-
-    const togglePopup = () => {
+    const toggleLoginLogout = () => {
+        if (token) {
+            localStorage.clear();
+            return window.location.reload(true)
+        }
         setIsPopupOpen(!isPopupOpen);
         if (isPopupOpen) {
             return document.body.style.overflow = 'unset';
@@ -43,103 +26,128 @@ const Header = () => {
         return document.body.style.overflow = 'hidden';
     };
 
-    const toggleDropMenu = () => {
-        setIsDropMenu(!isDropMenu);
-    };
-
-    const logout = () => {
-        localStorage.clear();
-        window.location.reload(true)
-    }
-
-    // const navigator = useNavigate()
     return (
         <>
-            <header>
-                <Link to="/"><h1>The Hrep</h1></Link>
-                <div className='right'>
-                    <div className='search_bar'>
+            <MainHeader>
+                <Link to="/"><div className="title">The <span>SIREN</span></div></Link>
+                <div className='rightBar'>
+
+                    <div className='searchBar'>
                         <input id='search' type='text' placeholder="Search for products brands and more" />
-                        <label htmlFor='search'><FontAwesomeIcon icon={faSearch} /></label>
+                        <label htmlFor='search'><SearchIcon /></label>
                     </div>
-                    {token
-                        ? <button onClick={logout}>logOut</button>
-                        : <div onClick={togglePopup}><FontAwesomeIcon icon={faUser} /> Login</div>
-                    }
-                    {
-                        userName && <p>{userName.slice(0, 1).toUpperCase()}</p>
-                    }
-                    {isPopupOpen && <Login onClose={togglePopup} />}
-                    <div onClick={() => nav("/cart")}><FontAwesomeIcon icon={faCartShopping} /></div>
+
+                    <div className="userMenu">
+                        <Button
+                            onClick={toggleLoginLogout}
+                            variant="contained"
+                            size="small" >
+                            {token ? "logOut" : "login"}
+                        </Button>
+                        {userName &&
+                            <button className="userName">
+                                {userName.slice(0, 1).toUpperCase()}
+                            </button>
+                        }
+                    </div>
+                    <IconButton onClick={() => nav("/cart")}>
+                        <ShoppingCartIcon />
+                    </IconButton>
                 </div>
-            </header>
-            <div className='DropMenuIcon' onClick={toggleDropMenu}>
-                {
-                    isDropMenu ? <MenuIcon /> : <MenuOpenIcon />
-                }
-            </div>
-            <nav className={isDropMenu ? "DropMenuHidden" : ""}>
-                <NavLink to="/">
-                    <img src="https://rukminim1.flixcart.com/fk-p-flap/80/80/image/4f84f7cf33100b5d.png?q=100" alt='top offers' />
-                    <span>Top Offers</span>
-                </NavLink>
-                <div onMouseEnter={mobileDropDown} onMouseLeave={mobileDropDown}>
-                    <NavLink to="/mobiles">
-                        <img src="https://rukminim1.flixcart.com/flap/128/128/image/22fddf3c7da4c4f4.png?q=100" alt='Fuck' />
-                        <span>Mobiles</span>
-                    </NavLink>
-                    {
-                        <div onClick={toggleDropMenu} className={isMobile ? "dropDown" : "dropDown isDropDownHidden"} >
-                            <Link to='/mobiles' state={{ brand: "apple" }}>Iphone</Link>
-                            <Link to='/mobiles' state={{ brand: "samsung" }}>Samsung</Link>
-                            <Link to='/mobiles' state={{ brand: "vivo" }}>Vivo</Link>
-                            <Link to='/mobiles' state={{ brand: "redmi" }}>Redmi</Link>
-                        </div>
-                    }
-                </div>
-                <div onMouseEnter={fashionDropDown} onMouseLeave={fashionDropDown}>
-                    <NavLink to="/fashion">
-                        <img src="https://rukminim1.flixcart.com/flap/128/128/image/82b3ca5fb2301045.png?q=100" alt='not found' />
-                        <span>Fashion</span>
-                    </NavLink>
-                    {
-                        <div onClick={toggleDropMenu} className={isFashion ? "dropDown" : "dropDown isDropDownHidden"} >
-                            <Link to='/fashion' state={{ brand: "men" }}>Men</Link>
-                            <Link to='/fashion' state={{ brand: "women" }}>Women</Link>
-                            <Link to='/fashion' state={{ brand: "kids" }}>Kids</Link>
-                        </div>
-                    }
-                </div>
-                <div onMouseEnter={electronicsDropDown} onMouseLeave={electronicsDropDown}>
-                    <NavLink to="/electronics">
-                        <img src="https://rukminim1.flixcart.com/flap/80/80/image/69c6589653afdb9a.png?q=100" alt='not found' />
-                        <span>Electronics</span>
-                    </NavLink>
-                    {
-                        <div onClick={toggleDropMenu} className={isElectronics ? "dropDown" : "dropDown isDropDownHidden"} >
-                            <Link to='/electronics' state={{ brand: "laptop" }}>Laptop</Link>
-                            <Link to='/electronics' state={{ brand: "tablet" }}>Tablet</Link>
-                            <Link to='/electronics' state={{ brand: "headphone" }}>Headphone</Link>
-                        </div>
-                    }
-                </div>
-                <div onMouseEnter={appliancesDropDown} onMouseLeave={appliancesDropDown}>
-                    <NavLink to="/appliances">
-                        <img src="https://rukminim1.flixcart.com/flap/80/80/image/0ff199d1bd27eb98.png?q=100" alt='not found' />
-                        <span>Appliances</span>
-                    </NavLink>
-                    {
-                        <div onClick={toggleDropMenu} className={isAppliances ? "dropDown" : "dropDown isDropDownHidden"} >
-                            <Link to='/appliances' state={{ brand: "television" }}>Television</Link>
-                            <Link to='/appliances' state={{ brand: "washingMachine" }}>Washing Machine</Link>
-                            <Link to='/appliances' state={{ brand: "refrigerator" }}>Refrigerator</Link>
-                            <Link to='/appliances' state={{ brand: "airConditioner" }}>Air Conditioner</Link>
-                        </div>
-                    }
-                </div>
-            </nav>
+                {isPopupOpen && <Login onClose={toggleLoginLogout} />}
+            </MainHeader>
+
+            <Navbar />
         </>
     )
 }
+
+const MainHeader = styled.header`
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+    background-color: #fff;
+    position: sticky;
+    top: 0;
+    padding: 0.5em 0;
+    z-index: 10;
+
+        .title{
+            font-size: 2em;
+            font-family: 'Abril Fatface', cursive;
+        }
+
+        .rightBar{
+            display: flex;
+            align-items: center;
+            gap: 1em;
+        }
+
+        .searchBar{
+            display: flex;
+            height: 1.8em;
+            background-color: white;
+            border-radius: 10px;
+            border: 1px groove gray;
+            :focus-within{
+                outline: 2px solid black;
+                label{
+                    visibility: hidden;
+                }
+            }
+
+            input{
+                border-radius: 10px;
+                padding-left: 10px;
+                width: 20em;
+                border: none;
+                :focus{
+                    outline: none;
+                }
+            }
+
+            label{
+                color: gray;
+                margin-right: 5px;
+                svg{
+                    vertical-align: middle;
+                }
+            }
+        }
+        .userMenu button {
+            height: 2em;
+        }
+        .userName{
+            margin-left: 10px;
+            width: 2em;
+            border-radius: 50%;
+            border: 1px solid #000;
+            background-color: #48abe0;
+            box-shadow: 0 1px 2px darkslategray;
+            cursor: pointer;
+        }
+    
+    @media only screen and (max-width:539px){
+
+        flex-direction: column;
+        padding: 0;
+
+        .rightBar{
+            justify-content: space-around;
+        }
+
+        .searchBar{
+
+             input{
+                width: 10em;
+                border: none;
+        }
+        .userMenu button{
+            height: 1em;
+            width: 1em;
+        }
+    }
+
+`
 
 export default Header

@@ -1,5 +1,5 @@
 import React from 'react'
-import "../pages/home/Home.css"
+import "../../pages/home/Home.css"
 import { useNavigate } from 'react-router-dom'
 
 const CardLayout = ({ Data }) => {

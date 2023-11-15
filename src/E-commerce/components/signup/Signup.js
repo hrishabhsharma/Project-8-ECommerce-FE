@@ -27,11 +27,10 @@ const Signup = () => {
     e.preventDefault();
     axios.post("https://hrishabh-e-commerce.onrender.com/signup", User)
       .then(res => {
-        // console.log(res.data.msg)
         setMessage(res.data.msg)
         if (res.data.token) {
           localStorage.setItem("userToken", res.data.token)
-          localStorage.setItem("userName", User.name)
+          localStorage.setItem("user", res.data.user)
           setTimeout(() => {
             nav("/")
             window.location.reload(true)
@@ -77,7 +76,6 @@ const Signup = () => {
         <TextField
           name='password'
           label="password"
-          placeholder='**********'
           type={showPassword ? 'text' : 'password'}
           onChange={handleUser}
           InputProps={{

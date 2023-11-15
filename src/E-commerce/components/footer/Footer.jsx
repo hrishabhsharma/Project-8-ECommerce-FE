@@ -11,9 +11,9 @@ const Footer = () => {
         <div className='Footer_Body_Left'>
           <div onClick={() => Navigator('/')} className="Logo">
             <span className="left">The </span>
-            <span className='right'>Hrep</span>
+            <span className='right'>Siren</span>
           </div>
-          <p>The Hrep is a E-Commerce website where people can purchase latest products with more discounts.</p>
+          <p>The Siren is a E-Commerce website where people can purchase latest products with more discounts.</p>
           <div className='Icons'>
             <img src="https://img.icons8.com/ios-filled/50/linkedin-circled--v1.png" alt="linkedin-circled--v1" />
             <img src="https://img.icons8.com/ios-filled/50/twitter-circled--v1.png" alt="twitter-circled--v1" />
@@ -50,13 +50,13 @@ const Footer = () => {
           </div> */}
         </div>
         <div className='Footer_Body_Right'>
-          <h1>Generate Your Querry ?</h1>
+          <h1>Generate Your Query ?</h1>
           <p>+91-7987715253</p>
           <p>support@hrep.com</p>
         </div>
       </div>
       <div className='Copyright'>
-        <p>© 2023 THE HREP - A E-Commerce Website</p>
+        <p>© 2023 THE Siren - A E-Commerce Website</p>
         <div>
           <p>Privacy Policy</p>
           <p>Terms of service</p>

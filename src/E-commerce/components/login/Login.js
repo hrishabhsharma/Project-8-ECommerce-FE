@@ -6,10 +6,13 @@ import { faCircleXmark } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import { Button, IconButton, TextField, Typography } from '@mui/material'
+import { useDispatch } from 'react-redux'
+import { fetchCart } from '../../store/CartSlice'
 
 
 const Login = ({ onClose }) => {
   const nav = useNavigate()
+  const dispatch = useDispatch()
   const [showPassword, setShowPassword] = useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -27,14 +30,15 @@ const Login = ({ onClose }) => {
   const [Message, setMessage] = useState("")
   const login = (e) => {
     e.preventDefault();
-    axios.post("https://hrishabh-e-commerce.onrender.com/login", User)
+    axios.post("http://localhost:4000/login", User)
       .then(res => {
         setMessage(res.data.msg)
         if (res.data.token) {
           localStorage.setItem("userToken", (res.data.token))
-          localStorage.setItem("userName", res.data.username)
+          localStorage.setItem("user", res.data.user)
           setTimeout(() => {
             nav('/')
+            dispatch(fetchCart())
             window.location.reload(true)
           }, 1500)
         }
