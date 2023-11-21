@@ -1,18 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const fetchCart = createAsyncThunk('cart/get', async () => {
-  const userId = localStorage.getItem('userId')
+const fetchCart = createAsyncThunk('cart/get', async (userId) => {
   const response = await axios.get(`https://hrishabh-e-commerce.onrender.com/cart/${userId}`)
   return response.data
 })
-
-// const sendCart = createAsyncThunk('cart/update', async (product) => {
-//   const userId = localStorage.getItem('userId')
-//   const response = await axios.get(`http://localhost:4000/cart/${userId}/${product._id}`)
-//   return response.data
-// })
-
 
 const initialState = {
   data: [],
@@ -25,8 +17,9 @@ const CartSlice = createSlice({
   initialState,
   reducers: {
     addToCart: (state, action) => {
-      // const userId = localStorage.getItem('userId')
       const product = action.payload
+      const userName = JSON.parse(localStorage.getItem("User"))
+      axios.post(`https://hrishabh-e-commerce.onrender.com/cart/${userName._id}/${product._id}`)
       const existingProduct = state.data.find((p) => p.productId._id === product._id)
       if (!existingProduct) {
         state.data.push({
@@ -36,10 +29,26 @@ const CartSlice = createSlice({
         return
       }
 
-      existingProduct.quantity = existingProduct.quantity + 1;
+      existingProduct.quantity += 1;
+    },
+    removeToCart: (state, action) => {
+      const product = action.payload
+      const userName = JSON.parse(localStorage.getItem("User"))
+      axios.put(`https://hrishabh-e-commerce.onrender.com/cart/${userName._id}/${product._id}`)
+      const existingProduct = state.data.find((p) => p.productId._id === product._id)
+      if (existingProduct) {
+        if (existingProduct.quantity > 1) {
+          existingProduct.quantity -= 1;
+          return
+        }
+        state.data = state.data.filter((item) => item.productId._id !== product._id)
+      }
     },
     deleteFromCart: (state, action) => {
-      state.filter((item) => item.id !== action.payload.id)
+      const product = action.payload
+      const userName = JSON.parse(localStorage.getItem("User"))
+      state.data = state.data.filter((item) => item.productId._id !== product._id)
+      axios.delete(`https://hrishabh-e-commerce.onrender.com/cart/${userName._id}/${product._id}`)
     }
   },
   extraReducers: (builder) => {
@@ -48,26 +57,15 @@ const CartSlice = createSlice({
     })
     builder.addCase(fetchCart.fulfilled, (state, action) => {
       state.loading = false;
-      state.data = action.payload.data;
+      state.data = action.payload.cart;
     })
     builder.addCase(fetchCart.rejected, (state, action) => {
       state.loading = false;
       state.error = action.error
     })
-    // builder.addCase(sendCart.pending, (state) => {
-    //   state.loading = true;
-    // })
-    // builder.addCase(sendCart.fulfilled, (state, action) => {
-    //   state.loading = false;
-    //   state.data = action.payload.data;
-    // })
-    // builder.addCase(sendCart.rejected, (state, action) => {
-    //   state.loading = false;
-    //   state.error = action.error
-    // })
   }
 })
 
 export { fetchCart }
-export const { addToCart, deleteFromCart } = CartSlice.actions
+export const { addToCart, deleteFromCart, removeToCart } = CartSlice.actions
 export default CartSlice.reducer

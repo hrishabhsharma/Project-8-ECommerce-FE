@@ -7,7 +7,7 @@ import Footer from './components/footer/Footer'
 import styled from '@emotion/styled'
 import ProductDetail from './pages/productDetails/ProductDetail'
 import Signup from './components/signup/Signup'
-import Cart from './pages/addToCart/Cart'
+import Cart from './pages/cart/Cart'
 import { fetchProduct } from './store/ProductSlice'
 import { useDispatch } from 'react-redux'
 
@@ -21,7 +21,6 @@ const Router = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    console.log("api is calling right now")
     dispatch(fetchProduct())
   }, [dispatch])
 

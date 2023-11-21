@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import Carousel from 'react-material-ui-carousel'
-import "./Home.css"
 import HomeCards from '../../components/cards/HomeCards'
 import { CircularProgress } from '@mui/material'
 import { useSelector } from 'react-redux'
+import styled from 'styled-components'
 
 
 const Home = () => {
@@ -20,7 +20,7 @@ const Home = () => {
   const Electronics = Data.filter((j) => j.category === "electronics").slice(0, 5)
   const Appliances = Data.filter((j) => j.category === "appliances").slice(0, 5)
 
-  const render = <>
+  const render = <Wrapper>
     <Carousel className='slider' interval={2000} animation="slide"
       navButtonsAlwaysVisible
       indicatorContainerProps={{
@@ -54,7 +54,7 @@ const Home = () => {
     <div className='bigBillion'>
       <img src='https://imgeng.jagran.com/images/2023/sep/Flipkart%20Big%20Billion%20Day%20Sale%202023%20Date1695273513411.jpg' alt='not found' />
     </div>
-  </ >
+  </Wrapper >
 
   return (
     <>
@@ -67,5 +67,41 @@ const Home = () => {
     </>
   )
 }
+
+const Wrapper = styled.div`
+
+  .slider{
+    width: 90%;
+    margin: 0 auto;
+
+    img{
+      height: 15em;
+      width: 100%;
+    }
+  }
+
+  section{
+    background-color: #fff;
+    width: 90%;
+    margin: 1em auto;
+    padding: 1em;   
+  }
+
+  .bigBillion img{
+    width: 100%;
+  }
+
+  @media only screen and (max-width:539px){
+    section{
+        width: 100%;
+    }
+    .slider{
+        width: 100%;
+        & img{
+            height: 8em;
+        }
+    }
+  }
+`
 
 export default Home

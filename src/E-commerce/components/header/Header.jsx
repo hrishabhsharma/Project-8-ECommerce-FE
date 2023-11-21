@@ -1,65 +1,77 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import Login from '../login/Login'
 import Navbar from '../header/Navbar'
-import { Button } from "@mui/material";
+import { Button, Dialog } from "@mui/material";
 import styled from 'styled-components'
 import IconButton from "@mui/material/IconButton"
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import SearchIcon from '@mui/icons-material/Search';
+import { fetchCart } from '../../store/CartSlice';
+import { useDispatch } from 'react-redux';
 
 const Header = () => {
-    const nav = useNavigate()
-    const token = localStorage.getItem("userToken")
-    const userName = localStorage.getItem("userName")
-    const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const nav = useNavigate()
+  const dispatch = useDispatch()
 
-    const toggleLoginLogout = () => {
-        if (token) {
-            localStorage.clear();
-            return window.location.reload(true)
-        }
-        setIsPopupOpen(!isPopupOpen);
-        if (isPopupOpen) {
-            return document.body.style.overflow = 'unset';
-        }
-        return document.body.style.overflow = 'hidden';
-    };
+  const token = localStorage.getItem("Token")
+  const user = JSON.parse(localStorage.getItem("User"))
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
 
-    return (
-        <>
-            <MainHeader>
-                <Link to="/"><div className="title">The <span>SIREN</span></div></Link>
-                <div className='rightBar'>
+  useEffect(() => {
+    if (user) {
+      dispatch(fetchCart(user._id))
+    }
+  }, [dispatch, user])
 
-                    <div className='searchBar'>
-                        <input id='search' type='text' placeholder="Search for products brands and more" />
-                        <label htmlFor='search'><SearchIcon /></label>
-                    </div>
+  const toggleLoginLogout = () => {
+    if (token) {
+      localStorage.clear();
+      nav('/')
+      return window.location.reload(true)
+    }
+    setIsPopupOpen(!isPopupOpen);
+  };
 
-                    <div className="userMenu">
-                        <Button
-                            onClick={toggleLoginLogout}
-                            variant="contained"
-                            size="small" >
-                            {token ? "logOut" : "login"}
-                        </Button>
-                        {userName &&
-                            <button className="userName">
-                                {userName.slice(0, 1).toUpperCase()}
-                            </button>
-                        }
-                    </div>
-                    <IconButton onClick={() => nav("/cart")}>
-                        <ShoppingCartIcon />
-                    </IconButton>
-                </div>
-                {isPopupOpen && <Login onClose={toggleLoginLogout} />}
-            </MainHeader>
+  return (
+    <>
+      <Dialog open={isPopupOpen} onClose={toggleLoginLogout}>
+        <Login onClose={toggleLoginLogout} />
+      </Dialog>
 
-            <Navbar />
-        </>
-    )
+      <MainHeader>
+        <Link to="/"><div className="title">The <span>SIREN</span></div></Link>
+        <div className='rightBar'>
+
+          <div className='searchBar'>
+            <input id='search' type='text' placeholder="Search for products brands and more" />
+            <label htmlFor='search'><SearchIcon /></label>
+          </div>
+
+          <div className="userMenu">
+            <Button
+              onClick={toggleLoginLogout}
+              variant="contained"
+              size="small" >
+              {token ? "logOut" : "login"}
+            </Button>
+
+            {user &&
+              <button className="userName">
+                {user.name.slice(0, 1).toUpperCase()}
+              </button>
+            }
+          </div>
+
+          <IconButton onClick={() => nav("/cart")}>
+            <ShoppingCartIcon />
+          </IconButton>
+        </div>
+      </MainHeader>
+
+      <Navbar />
+    </>
+  )
 }
 
 const MainHeader = styled.header`
