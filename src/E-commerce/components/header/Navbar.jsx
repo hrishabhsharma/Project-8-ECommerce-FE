@@ -195,8 +195,9 @@ const DropMenuIcon = styled.div`
     @media only screen and (max-width:539px){
       display:block;
       background-color: #fff;
-      text-align:center;
+      text-align: left;
       padding-top: 10px;
+      padding-left: 2em;
     }
 
 `
