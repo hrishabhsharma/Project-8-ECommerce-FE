@@ -71,9 +71,6 @@ const Home = () => {
 const Wrapper = styled.div`
 
   .slider{
-    width: 90%;
-    margin: 0 auto;
-
     img{
       height: 15em;
       width: 100%;
@@ -82,8 +79,6 @@ const Wrapper = styled.div`
 
   section{
     background-color: #fff;
-    width: 90%;
-    margin: 1em auto;
     padding: 1em;   
   }
 

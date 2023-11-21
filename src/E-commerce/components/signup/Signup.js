@@ -14,7 +14,7 @@ const Signup = ({ onClose, toggle }) => {
       const data = new FormData(event.currentTarget);
       const User = {
         name: data.get('name'),
-        phone: data.get('phone'),
+        phone: Number(data.get('phone')),
         email: data.get('email'),
         password: data.get('password'),
       }

@@ -7,6 +7,7 @@ import { Button, CircularProgress } from '@mui/material'
 
 const ProductDetail = () => {
   const { id } = useParams()
+  const token = localStorage.getItem("Token")
   const [Data, setData] = useState([])
 
   const fetchData = useSelector((state) => state.product)
@@ -17,7 +18,9 @@ const ProductDetail = () => {
   }, [fetchData.data, id])
 
   const addCart = () => {
-    dispatch(addToCart(Data))
+    if (token) {
+      dispatch(addToCart(Data))
+    }
   }
   const render = (
     <Wrapper>
@@ -62,17 +65,18 @@ const ProductDetail = () => {
 const Wrapper = styled.section`
   display:flex;
   justify-content: space-evenly;
-
-    .leftSection{
+  
+  .leftSection{
+      margin: 1em 0;
       display:flex;
       flex-direction: column;
       gap:2em;
-
+      
       img{
         height: 20em;
         width: 16em;
       }
-
+      
       .bottomButton{
         display: flex;
         justify-content: space-evenly;
@@ -80,6 +84,7 @@ const Wrapper = styled.section`
     }
 
     .rightSection{
+      margin: 1em 0;
 
         .productTitle{
           font-size: 2.4em;

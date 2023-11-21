@@ -12,7 +12,9 @@ import { useDispatch } from 'react-redux'
 
 const Wrapper = styled.div`
   min-height:28vh;
-  background: transparent;
+  background: white;
+  width:90%;
+  margin: 1em auto;
 `
 const routingCategory = ['mobiles', 'fashion', 'electronics', 'appliances']
 
