@@ -9,6 +9,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import SearchIcon from '@mui/icons-material/Search';
 import { fetchCart } from '../../store/CartSlice';
 import { useDispatch } from 'react-redux';
+import SignUp from '../signup/Signup';
 
 const Header = () => {
   const nav = useNavigate()
@@ -17,6 +18,7 @@ const Header = () => {
   const token = localStorage.getItem("Token")
   const user = JSON.parse(localStorage.getItem("User"))
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [toggleDialog, setToggleDialog] = useState(true)
 
   useEffect(() => {
     if (user) {
@@ -33,10 +35,18 @@ const Header = () => {
     setIsPopupOpen(!isPopupOpen);
   };
 
+  const toggleLoginSignUp = () => {
+    setToggleDialog(!toggleDialog)
+  }
+
   return (
     <>
       <Dialog open={isPopupOpen} onClose={toggleLoginLogout}>
-        <Login onClose={toggleLoginLogout} />
+        {
+          toggleDialog
+            ? <Login onClose={toggleLoginLogout} toggle={toggleLoginSignUp} />
+            : <SignUp onClose={toggleLoginLogout} toggle={toggleLoginSignUp} />
+        }
       </Dialog>
 
       <MainHeader>
@@ -75,91 +85,93 @@ const Header = () => {
 }
 
 const MainHeader = styled.header`
-    display: flex;
-    justify-content: space-around;
-    text-align: center;
-    background-color: #fff;
-    position: sticky;
-    top: 0;
-    padding: 0.5em 0;
-    z-index: 10;
+      display: flex;
+      justify-content: space-around;
+      text-align: center;
+      background-color: #fff;
+      position: sticky;
+      top: 0;
+      padding: 0.5em 0;
+      z-index: 10;
 
-        .title{
-            font-size: 2em;
-            font-family: 'Abril Fatface', cursive;
+      .title{
+        font-size: 2em;
+        font-family: 'Abril Fatface', cursive;
+      }
+
+      .rightBar{
+        display: flex;
+        align-items: center;
+        gap: 1em;
+      }
+
+      .searchBar{
+        display: flex;
+        height: 1.8em;
+        background-color: white;
+        border-radius: 10px;
+        border: 1px groove gray;
+
+        :focus-within{
+          outline: 2px solid black;
+          label{
+            visibility: hidden;
+          }
         }
 
-        .rightBar{
-            display: flex;
-            align-items: center;
-            gap: 1em;
+        input{
+          border-radius: 10px;
+          padding-left: 10px;
+          width: 20em;
+          border: none;
+          :focus{
+            outline: none;
+          }
         }
 
-        .searchBar{
-            display: flex;
-            height: 1.8em;
-            background-color: white;
-            border-radius: 10px;
-            border: 1px groove gray;
-            :focus-within{
-                outline: 2px solid black;
-                label{
-                    visibility: hidden;
-                }
-            }
+        label{
+          color: gray;
+          margin-right: 5px;
+          svg{
+          vertical-align: middle;
+          }
+        }
+      }
 
-            input{
-                border-radius: 10px;
-                padding-left: 10px;
-                width: 20em;
-                border: none;
-                :focus{
-                    outline: none;
-                }
-            }
+      .userMenu button {
+        height: 2em;
+      }
 
-            label{
-                color: gray;
-                margin-right: 5px;
-                svg{
-                    vertical-align: middle;
-                }
-            }
-        }
-        .userMenu button {
-            height: 2em;
-        }
-        .userName{
-            margin-left: 10px;
-            width: 2em;
-            border-radius: 50%;
-            border: 1px solid #000;
-            background-color: #48abe0;
-            box-shadow: 0 1px 2px darkslategray;
-            cursor: pointer;
-        }
-    
-    @media only screen and (max-width:539px){
+      .userName{
+        margin-left: 10px;
+        width: 2em;
+        border-radius: 50%;
+        border: 1px solid #000;
+        background-color: #48abe0;
+        box-shadow: 0 1px 2px darkslategray;
+        cursor: pointer;
+      }
+
+      @media only screen and (max-width:539px){
 
         flex-direction: column;
         padding: 0;
 
         .rightBar{
-            justify-content: space-around;
+          justify-content: space-around;
         }
 
         .searchBar{
-
-             input{
-                width: 10em;
-                border: none;
-        }
-        .userMenu button{
+          input{
+            width: 10em;
+            border: none;
+          }
+          .userMenu button{
             height: 1em;
             width: 1em;
+          }
         }
-    }
-
+      }
 `
 
 export default Header

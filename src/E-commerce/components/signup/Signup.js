@@ -1,62 +1,76 @@
-import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { Button, IconButton, TextField, Typography } from '@mui/material'
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom';
-import "./signup.css"
 import axios from 'axios';
+import { AiOutlineCloseCircle } from "react-icons/ai";
+import { Visibility, VisibilityOff, LockOutlined as LockOutlinedIcon } from '@mui/icons-material'
+import { Avatar, Box, Button, IconButton, TextField, Typography } from '@mui/material'
 
-const Signup = () => {
-  const nav = useNavigate()
+const Signup = ({ onClose, toggle }) => {
   const [showPassword, setShowPassword] = useState(false);
-
-  const handleToggleShowPassword = (event) => {
-    event.preventDefault();
-    setShowPassword((show) => !show);
-  }
-  const [User, setUser] = useState({
-    name: "",
-    phone: "",
-    email: "",
-    password: "",
-  })
-  const handleUser = (e) => {
-    setUser({ ...User, [e.target.name]: e.target.value })
-  }
   const [Message, setMessage] = useState("")
-  const register = (e) => {
-    e.preventDefault();
-    axios.post("https://hrishabh-e-commerce.onrender.com/signup", User)
-      .then(res => {
-        setMessage(res.data.msg)
-        if (res.data.token) {
-          localStorage.setItem("userToken", res.data.token)
-          localStorage.setItem("user", res.data.user)
-          setTimeout(() => {
-            nav("/")
-            window.location.reload(true)
-          }, 1000)
-        }
-      })
-      .catch(err => console.log(err))
+
+  const register = async (event) => {
+    event.preventDefault();
+    try {
+      const data = new FormData(event.currentTarget);
+      const User = {
+        name: data.get('name'),
+        phone: data.get('phone'),
+        email: data.get('email'),
+        password: data.get('password'),
+      }
+      console.log(User)
+      const response = await axios.post("https://hrishabh-e-commerce.onrender.com/signup", User)
+      setMessage(response.data.msg)
+      setTimeout(() => {
+        onClose()
+        localStorage.setItem("Token", response.data.token)
+        localStorage.setItem("User", JSON.stringify(response.data.user))
+        toggle()
+        // window.location.reload(true)
+      }, 1500)
+    } catch (error) {
+      const msg = error.response.data.msg
+      msg && setMessage(msg)
+      console.log(msg)
+    }
   }
   return (
-    <div className='Page'>
-      <h1>SignUp Page<br /> Hrep</h1>
-      <form onSubmit={register}>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        padding: '2em',
+      }}
+    >
+      <IconButton
+        sx={{ position: 'absolute', right: '0', top: '0' }}
+        aria-label="close"
+        size="large"
+        onClick={() => { onClose(); toggle(); }}
+      >
+        <AiOutlineCloseCircle />
+      </IconButton>
+      <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+        <LockOutlinedIcon />
+      </Avatar>
+      <Typography component="h1" variant="h5">
+        SignIn to New Account
+      </Typography>
+      <Box component="form" onSubmit={register} noValidate sx={{ mt: 2, display: 'grid', gap: '1em' }}>
         <TextField
+          id='name'
           name='name'
           label="Username"
+          autoComplete="username"
           placeholder='your name'
-          type='text'
-          onChange={handleUser}
           required
         />
         <TextField
+          id='phone'
           name='phone'
           label="Mobile Number"
           placeholder='your mobile number'
-          type='tel'
-          onChange={handleUser}
           required
           inputProps={{
             inputMode: 'numeric',
@@ -66,38 +80,49 @@ const Signup = () => {
         // helperText={`${User.phone.length}/11`}
         />
         <TextField
+          id="email"
           name='email'
           label="Email Address"
-          placeholder='name@example.com'
-          type='email'
-          onChange={handleUser}
+          autoComplete="email"
           required
         />
         <TextField
           name='password'
-          label="password"
+          id="password"
           type={showPassword ? 'text' : 'password'}
-          onChange={handleUser}
+          autoComplete="current-password"
+          label="Password"
           InputProps={{
             endAdornment:
               <IconButton
                 aria-label="toggle password visibility"
-                onMouseEnter={handleToggleShowPassword}
-                onMouseLeave={handleToggleShowPassword}
+                onClick={() => setShowPassword((show) => !show)}
                 edge="end"
               >
-                {showPassword ? <VisibilityOff /> : <Visibility />}
+                {showPassword ? <Visibility /> : <VisibilityOff />}
               </IconButton>
           }}
           required
         />
-        <Button variant="contained" type='submit'>Submit</Button>
-      </form>
+        <Button
+          type="submit"
+          variant="contained"
+          sx={{ mb: 2 }}
+        >
+          Sign In
+        </Button>
+        <Button onClick={toggle}>
+          Already have an account? Go to Login
+        </Button>
+      </Box>
       {
-        Message ? <Typography mt={2}>{Message}</Typography> : ""
+        Message
+          ? <Typography mt={2}>
+            {Message}
+          </Typography>
+          : ""
       }
-      <p className='bottom_msg' onClick={() => nav("/")}>Already have an account? Go to Login</p>
-    </div>
+    </Box>
   )
 }
 

@@ -6,7 +6,6 @@ import Header from './components/header/Header'
 import Footer from './components/footer/Footer'
 import styled from '@emotion/styled'
 import ProductDetail from './pages/productDetails/ProductDetail'
-import Signup from './components/signup/Signup'
 import Cart from './pages/cart/Cart'
 import { fetchProduct } from './store/ProductSlice'
 import { useDispatch } from 'react-redux'
@@ -37,7 +36,6 @@ const Router = () => {
             <Route key={index} path={`/${cat}/:brandName`} element={<Pages category={cat} />} />
           ))}
           <Route path='/:category/:brandName/:id' element={<ProductDetail />} />
-          <Route path='/signup' element={<Signup />} />
           <Route path='/cart' element={<Cart />} />
         </Routes>
       </Wrapper>

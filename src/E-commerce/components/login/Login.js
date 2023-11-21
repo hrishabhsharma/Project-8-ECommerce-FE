@@ -5,7 +5,7 @@ import { Visibility, VisibilityOff, LockOutlined as LockOutlinedIcon } from '@mu
 import { Avatar, Box, Button, IconButton, TextField, Typography } from '@mui/material'
 
 
-const Login = ({ onClose }) => {
+const Login = ({ onClose, toggle }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [Message, setMessage] = useState("")
 
@@ -96,7 +96,7 @@ const Login = ({ onClose }) => {
             </Button>
           </Grid>
           <Grid item> */}
-        <Button href='/signup'>
+        <Button onClick={toggle}>
           Don't have an account ? Sign Up
         </Button>
         {/* </Grid>
@@ -109,7 +109,6 @@ const Login = ({ onClose }) => {
           </Typography>
           : ""
       }
-      {/* <p className='bottom_msg' onClick={() => { onClose(); nav("/signup") }}>Don't have an account? Sign Up</p> */}
     </Box>
   )
 }
