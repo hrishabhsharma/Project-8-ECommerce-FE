@@ -177,6 +177,22 @@ const Wrapper = styled.section`
       }
     }
   }
+
+  @media only screen and (max-width:539px){
+    width: 100%;
+    padding: 1em;
+    flex-direction: column;
+
+    .leftSection{
+      width: 100%;
+
+      .CartCard{
+        div{
+          text-align: center;
+        }
+      }
+    }
+  }
   
 
 `

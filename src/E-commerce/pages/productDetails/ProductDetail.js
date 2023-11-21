@@ -115,6 +115,13 @@ const Wrapper = styled.section`
           }
         }
     }
+
+  @media only screen and (max-width:539px){
+    flex-direction: column;
+    align-items: center;
+    padding: 2em;
+  }
+
 `
 
 export default ProductDetail
