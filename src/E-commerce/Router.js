@@ -39,6 +39,7 @@ const Router = () => {
           ))}
           <Route path='/:category/:brandName/:id' element={<ProductDetail />} />
           <Route path='/cart' element={<Cart />} />
+          <Route path='/search' element={<Pages />} />
         </Routes>
       </Wrapper>
       <Footer />

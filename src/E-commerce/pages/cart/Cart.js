@@ -1,13 +1,15 @@
 import { Button, IconButton, Typography } from '@mui/material';
-import React from 'react'
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { FaMinus, FaPlus } from "react-icons/fa";
 import styled from 'styled-components';
 import { addToCart, deleteFromCart, removeToCart } from '../../store/CartSlice';
+import PayPalApis from '../../components/payment/Payment';
 
 const Cart = () => {
   const dispatch = useDispatch()
   const cart = useSelector((state) => state.cart)
+  const [showPayment, setShowPayment] = useState(false)
 
   const totalPrice = cart && cart.data.reduce((total, item) => {
     const itemPrice = Number(item.productId.costPrice.replace(/[^0-9]/g, "")) * item.quantity
@@ -46,7 +48,11 @@ const Cart = () => {
             </div>
           )}
         <div className='orderBar'>
-          <Button xs={'large'}>Place Order</Button>
+          {
+            showPayment
+              ? <PayPalApis totalPrice={totalPrice} />
+              : <Button xs={'large'} onClick={() => setShowPayment(!showPayment)}>Place Order</Button>
+          }
         </div>
       </section>
       <section className='rightSection'>
@@ -92,7 +98,7 @@ const Cart = () => {
 }
 
 const Wrapper = styled.section`
-  width: 90%;
+  background: rgba(0, 0, 0, 0.1);
   margin: 1em auto;
   display: flex;
   gap: 2em;

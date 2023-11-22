@@ -19,6 +19,7 @@ const Header = () => {
   const user = JSON.parse(localStorage.getItem("User"))
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [toggleDialog, setToggleDialog] = useState(true)
+  const [searchName, setSearchName] = useState("")
 
   useEffect(() => {
     if (user) {
@@ -39,6 +40,13 @@ const Header = () => {
     setToggleDialog(!toggleDialog)
   }
 
+  const handleSearch = (e) => {
+    setSearchName(e.target.value)
+    setTimeout(() => {
+      nav('/search', { state: { search: e.target.value } })
+    }, 1500);
+  }
+
   return (
     <>
       <Dialog open={isPopupOpen} onClose={toggleLoginLogout}>
@@ -54,7 +62,13 @@ const Header = () => {
         <div className='rightBar'>
 
           <div className='searchBar'>
-            <input id='search' type='text' placeholder="Search for products brands and more" />
+            <input
+              id='search'
+              type='text'
+              value={searchName}
+              placeholder="Search for products brands and more"
+              onChange={handleSearch}
+            />
             <label htmlFor='search'><SearchIcon /></label>
           </div>
 
