@@ -23,7 +23,9 @@ const HomeCards = ({ Data }) => {
 
 const Cards = styled.div`
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  row-gap: 1em;
   margin-top: 1em;
   
   .singleCard{
@@ -31,7 +33,7 @@ const Cards = styled.div`
       border: 1px groove grey;
       border-radius: 10px;
       padding: 10px;
-      width: 15%;
+      width: 11em;
       
       img{
         height: 11em;
